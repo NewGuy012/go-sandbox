@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+
+	"appliedgo.net/proverbs"
 )
 
 // Hello returns a greeting for the named person.
@@ -13,8 +15,8 @@ func Hello(name string) (string, error) {
 		return name, errors.New("empty name")
 	}
 	// Create a message using a random format.
-	message := fmt.Sprintf(randomFormat(), name)
-	return message, nil
+	hello := fmt.Sprintf("%v %v! Remember: %v\n", randomFormat(), name, proverbs.Random())
+	return hello, nil
 }
 
 // Hellos returns a map that associates each of the named people
@@ -41,9 +43,9 @@ func Hellos(names []string) (map[string]string, error) {
 func randomFormat() string {
 	// A slice of message formats.
 	formats := []string{
-		"Hi, %v. Welcome!",
-		"Great to see you, %v!",
-		"Hola, %v! Bienvenidos!",
+		"Hi",
+		"Bonjour",
+		"Hola",
 	}
 
 	// Return one of the message formats selected at random.

@@ -22,7 +22,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	messages_formatted := []string{}
+	for _, v := range messages {
+		messages_formatted = append(messages_formatted, v)
+	}
+
 	// If no error was returned, print the returned map of
 	// messages to the console.
-	fmt.Println(messages)
+	fmt.Println(messages_formatted)
 }
