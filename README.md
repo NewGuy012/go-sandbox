@@ -39,7 +39,7 @@ Moses Yoo, juyoung.m.yoo at gmail dot com.
 
 ## License
 
-TDB
+This project is licensed under the BSD 3-Clause license. See the LICENSE.md file for details.
 
 ## Acknowledgments
 
