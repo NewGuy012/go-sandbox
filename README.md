@@ -13,7 +13,7 @@ A couple projects written in Go to explore its capabilities.
 
 * go: https://go.dev/doc/install
 
-### Executing program
+### Executing go-proverbs-greetings program
 
 1. Check that you have go installed
 ```
@@ -23,9 +23,29 @@ go version
 ```
 cd go-proverbs-greetings
 ```
-3. Run code How to run the program
+3. Run code
 ```
 go run .
+```
+
+### Executing sample-rest-api-gin program
+
+1. Check that you have go installed
+```
+go version
+```
+2. Change directory into module
+```
+cd sample-rest-api-gin
+```
+3. Run code
+```
+go run .
+```
+4. From a command line window, use curl to make a request to your running web service
+```
+curl http://localhost:8080/albums
+curl http://localhost:8080/albums/2
 ```
 
 ## Authors
