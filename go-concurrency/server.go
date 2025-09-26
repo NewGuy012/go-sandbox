@@ -34,7 +34,7 @@ func handler(conn net.Conn, ch chan string) {
 func logger(ch chan string) {
 	for {
 		x := <-ch
-		fmt.Printf("Logger: Logging client address = %v\n", x)
+		fmt.Printf("Logger: Logging client address = %v\n\n", x)
 	}
 }
 
