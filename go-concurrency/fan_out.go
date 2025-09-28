@@ -8,7 +8,7 @@ import (
 
 const (
 	WORKERS = 5
-	TASKS   = 50
+	TASKS   = 10
 )
 
 func main() {
@@ -19,41 +19,47 @@ func main() {
 	go pool(&wg, WORKERS, TASKS)
 
 	wg.Wait()
+
+	fmt.Printf("\nFinished all tasks!")
 }
 
-func pool(wg *sync.WaitGroup, workers, tasks int) {
-	ch := make(chan int)
+func pool(wg *sync.WaitGroup, workers int, tasks int) {
+	ch_result := make(chan int)
+	ch_id := make(chan int)
+
+	fmt.Printf("Creating worker pool of %v...\n\n", workers)
 
 	for i := 1; i <= workers; i++ {
-		go worker(i, ch, wg)
+		go worker(i, ch_result, ch_id, wg)
 	}
 
+	fmt.Printf("Assigning %v tasks among %v workers...\n\n", tasks, workers)
 	for i := 1; i <= tasks; i++ {
-		process(ch, i)
+		task(i, ch_result, ch_id)
 	}
 
-	close(ch)
+	close(ch_result)
+	close(ch_id)
 }
 
-func process(ch chan int, input int) {
-	output := input + 3 - 2 - 1
+func task(input int, ch_result chan int, ch_id chan int) {
+	output := input * 2
 	time.Sleep(5 * time.Millisecond)
-	ch <- output
+	ch_result <- output
+	ch_id <- input
 }
 
-func worker(worker_id int, ch <-chan int, wg *sync.WaitGroup) {
+func worker(worker_id int, ch_result <-chan int, ch_id <-chan int, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	for {
-		task, ok := <-ch
+		result, ok := <-ch_result
+		task := <-ch_id
 
 		if !ok {
 			return
 		}
 
-		d := time.Duration(task) * time.Millisecond
-		time.Sleep(d)
-
-		fmt.Printf("Worker %v, processing task %v\n", worker_id, task)
+		fmt.Printf("Worker %v, task %v, result %v\n", worker_id, task, result)
 	}
 }
